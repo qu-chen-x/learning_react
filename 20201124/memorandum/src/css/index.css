@@ -1,0 +1,70 @@
+*{
+    margin:0px;
+    padding:0px;
+}
+.container{
+    margin:100px auto;
+    background:gainsboro;
+}
+.container .part_1{
+    width:600px;
+    display: flex;
+    margin:0 auto;
+    justify-content: space-between;
+    align-self:center;
+}
+.container .part_1 input{
+    width:70%;
+    height:50px;
+    text-indent: 8px;
+    display: inline-block;
+    box-sizing: border-box;
+}
+.container .part_1 button{
+    width:20%;
+    height:50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 25px;
+    display: inline-block;
+    background:lightgreen;
+    box-sizing: border-box;
+}
+.container .part_2{
+    width:600px;
+    margin:40px auto;
+    overflow: hidden;
+}
+.container .part_2 .show_list{
+    list-style:none;
+    text-align: left;
+    background:rgb(136, 243, 234);
+    
+}
+.container .part_2 .show_list li{
+    height:40px;
+    line-height: 40px;
+    display: flex;
+}
+.container .part_3{
+    width:600px;
+    margin:100px auto;
+    display: flex;
+    align-self: center;
+}
+.container .part_3 button{
+    width:200px;
+    height:50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 25px;
+    display: inline-block;
+    background:lightgreen;
+    box-sizing: border-box;
+}
+.item{
+    text-decoration: line-through;
+}
+.hidden_thing{
+    display: none;
+}
