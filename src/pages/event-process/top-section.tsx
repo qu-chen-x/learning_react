@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
+import * as React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Card, Form, Input, Row, Col, Space, Button } from "antd";
 import { format } from "date-fns";
@@ -9,11 +9,12 @@ import { FormItemLabelProps } from "antd/lib/form/FormItemLabel";
 
 import { DatePicker, InfoItem } from "components";
 import { FormValues } from "./types";
+import useEventParams, { initialSate } from "./top-section/use-event-params";
 
 const defaultValue: FormValues = {
-  eventName: "",
-  eventContent: "",
-  createTime: null,
+  eventName: initialSate.eventName,
+  eventContent: initialSate.eventContent,
+  createTime: initialSate.createTime,
 };
 
 const schema = yup.object({
@@ -30,28 +31,34 @@ const shareItemProps: Pick<FormItemLabelProps, "labelAlign" | "labelCol"> = {
   labelCol: { span: 4 },
 };
 interface Props {
-  eventState: FormValues | null;
-  setEventState: React.Dispatch<React.SetStateAction<FormValues | null>>;
+  eventState: FormValues[];
+  setEventState: React.Dispatch<React.SetStateAction<FormValues[]>>;
 }
 export default function TopSection({ eventState, setEventState }: Props) {
-  const {
-    handleSubmit,
-    control,
-    reset,
-    formState: { errors },
-  } = useForm({
+  const [state, dispatch] = useEventParams();
+  const { handleSubmit, control, reset } = useForm({
     defaultValues: defaultValue,
     resolver: yupResolver(schema),
   });
 
   const onSubmit = async (data: FormValues) => {
-    console.log({ data });
-    setEventState({
-      eventName: data.eventName,
-      eventContent: data.eventContent,
-      createTime: data.createTime,
+    setEventState((pre) => {
+      return [
+        ...pre,
+        {
+          eventName: data.eventName,
+          eventContent: data.eventContent,
+          createTime: data.createTime,
+          isChecked: false,
+          mode: "todo",
+        },
+      ];
+    });
+    dispatch({
+      type: "apply",
     });
   };
+
   return (
     <Card css={{ padding: 20 }} title="创建事务">
       <Row gutter={8}>
@@ -83,6 +90,12 @@ export default function TopSection({ eventState, setEventState }: Props) {
                       placeholder="请输入待办事项名称"
                       onChange={(e) => {
                         onChange(e.target.value);
+                        dispatch({
+                          type: "updateDraftEventName",
+                          payload: {
+                            value: e.target.value,
+                          },
+                        });
                       }}
                       allowClear
                     />
@@ -112,6 +125,12 @@ export default function TopSection({ eventState, setEventState }: Props) {
                       placeholder={["任务开始时间", "任务结束时间"]}
                       onChange={(dates, dateString) => {
                         onChange(dates);
+                        dispatch({
+                          type: "updateDraftCreateTime",
+                          payload: {
+                            value: dates,
+                          },
+                        });
                       }}
                       css={{ width: "100%" }}
                     />
@@ -152,6 +171,12 @@ export default function TopSection({ eventState, setEventState }: Props) {
                       placeholder="请输入待办事项内容"
                       onChange={(e) => {
                         onChange(e.target.value);
+                        dispatch({
+                          type: "updateDraftEventContent",
+                          payload: {
+                            value: e.target.value,
+                          },
+                        });
                       }}
                       allowClear
                     />
@@ -167,6 +192,9 @@ export default function TopSection({ eventState, setEventState }: Props) {
                 <Button
                   onClick={() => {
                     reset();
+                    dispatch({
+                      type: "reset",
+                    });
                   }}
                 >
                   清空
@@ -186,25 +214,19 @@ export default function TopSection({ eventState, setEventState }: Props) {
           >
             <Row gutter={8}>
               <Col span={24}>
-                <InfoItem
-                  title="事务名称"
-                  value={eventState?.eventName as string}
-                />
+                <InfoItem title="事务名称" value={state.draftEventName} />
               </Col>
               <Col span={24}>
-                <InfoItem
-                  title="事务内容"
-                  value={eventState?.eventContent as string}
-                />
+                <InfoItem title="事务内容" value={state.draftEventContent} />
               </Col>
               <Col span={24}>
                 <InfoItem
                   title="任务开始时间"
                   value={
-                    eventState?.createTime
-                      ? eventState?.createTime[0]
+                    state?.draftCreateTime
+                      ? state?.draftCreateTime[0]
                         ? format(
-                            eventState.createTime[0],
+                            state.draftCreateTime[0],
                             "yyyy-MM-dd hh:mm:ss"
                           )
                         : null
@@ -216,10 +238,10 @@ export default function TopSection({ eventState, setEventState }: Props) {
                 <InfoItem
                   title="任务结束时间"
                   value={
-                    eventState?.createTime
-                      ? eventState?.createTime[1]
+                    state?.draftCreateTime
+                      ? state?.draftCreateTime[1]
                         ? format(
-                            eventState.createTime[1],
+                            state.draftCreateTime[1],
                             "yyyy-MM-dd hh:mm:ss"
                           )
                         : null
