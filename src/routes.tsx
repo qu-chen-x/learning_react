@@ -16,6 +16,10 @@ const EventProcess = React.lazy(
   () => import(/*webpackPrefetch:true */ "pages/event-process")
 );
 
+const AdventureMap = React.lazy(
+  () => import(/*webpackPrefetch:true */ "pages/adventure-map")
+);
+
 interface CustomRouteObject extends RouteObject {
   navName: string;
   authCode?: string;
@@ -44,8 +48,13 @@ const myRoutes: CustomRouteObject[] = [
         children: [
           {
             path: "event-process",
-            navName: "事务处理",
+            navName: "计划处理",
             element: <EventProcess />,
+          },
+          {
+            path: "adventure-map",
+            navName: "探险地图",
+            element: <AdventureMap />,
           },
         ],
       },

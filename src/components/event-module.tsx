@@ -33,11 +33,7 @@ export default function EventModule({
         <Col span={24} css={{ borderTop: "1px solid #ddd", paddingTop: 20 }}>
           <Row gutter={8}>
             <Col span={8}>
-              <Checkbox
-                checked={checked}
-                onChange={(e) => handleAll(e, mode)}
-                // indeterminate={checked}
-              >
+              <Checkbox checked={checked} onChange={(e) => handleAll(e, mode)}>
                 全选
               </Checkbox>
             </Col>
@@ -67,14 +63,16 @@ export default function EventModule({
               </Radio.Group>
             </Col>
             <Col span={8}>
-              <Button
-                type="primary"
-                onClick={() => {
-                  handleSure(mode);
-                }}
-              >
-                确定
-              </Button>
+              <Space css={{ display: "flex", justifyContent: "flex-end" }}>
+                <Button
+                  type="primary"
+                  onClick={() => {
+                    handleSure(mode);
+                  }}
+                >
+                  确定
+                </Button>
+              </Space>
             </Col>
           </Row>
         </Col>

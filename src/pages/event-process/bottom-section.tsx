@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useState, useMemo, useCallback, useEffect } from "react";
 import { EventModule, EventPiece } from "components";
-import { Col, Row, message } from "antd";
+import { Col, Row, message, Card } from "antd";
 import { FormValues, ModeType } from "./types";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import { useEvent } from "hooks";
@@ -278,11 +278,13 @@ export default function BottomSection({ eventState, setEventState }: Props) {
 
   return (
     <div css={{ marginTop: 20 }}>
-      <Row gutter={8}>
-        <Col span={8}>{todoThing}</Col>
-        <Col span={8}>{WorkingThing}</Col>
-        <Col span={8}>{doneThing}</Col>
-      </Row>
+      <Card css={{ padding: 20 }} title="事务一览处">
+        <Row gutter={8}>
+          <Col span={8}>{todoThing}</Col>
+          <Col span={8}>{WorkingThing}</Col>
+          <Col span={8}>{doneThing}</Col>
+        </Row>
+      </Card>
     </div>
   );
 }

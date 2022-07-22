@@ -3,7 +3,6 @@ import * as React from "react";
 
 import ContentSection from "./navigator-page/content-section";
 import NavigatorSection from "./navigator-page/navigator-section";
-import "../App.css";
 
 export default function NavigatorPage() {
   return (

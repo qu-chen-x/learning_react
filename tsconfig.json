@@ -20,7 +20,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "src",//用于解析非绝对路径（即相对路径）模块
-    // "jsxImportSource": "@emotion/react"
+    "jsxImportSource": "@emotion/react"
   },
   "include": [
     "src"

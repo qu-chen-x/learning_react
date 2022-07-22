@@ -8,6 +8,7 @@ import {
   HomeOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  GlobalOutlined,
 } from "@ant-design/icons";
 import { Button, Menu } from "antd";
 
@@ -25,14 +26,7 @@ export default function NavigatorSection() {
   const menuItem: MenuItem[] = [
     {
       title: "首页",
-      label: (
-        <NavLink
-          to="/home"
-          // style={({ isActive }) => ({ color: isActive ? "#fff" : "#fff" })}
-        >
-          首页
-        </NavLink>
-      ),
+      label: <NavLink to="/home">首页</NavLink>,
       key: "1",
       icon: <HomeOutlined />,
     },
@@ -44,16 +38,15 @@ export default function NavigatorSection() {
       children: [
         {
           title: "事务处理",
-          label: (
-            <NavLink
-              to="/service-hall/event-process"
-              // style={({ isActive }) => ({ color: isActive ? "#fff" : "#fff" })}
-            >
-              事务处理
-            </NavLink>
-          ),
+          label: <NavLink to="/service-hall/event-process">事务处理</NavLink>,
           key: "3",
           icon: <ContainerOutlined />,
+        },
+        {
+          title: "探险地图",
+          label: <NavLink to="/service-hall/adventure-map">探险地图</NavLink>,
+          key: "4",
+          icon: <GlobalOutlined />,
         },
       ],
     },

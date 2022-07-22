@@ -18,8 +18,8 @@ const defaultValue: FormValues = {
 };
 
 const schema = yup.object({
-  eventName: yup.string().required("请输入事务名称"),
-  eventContent: yup.string().required("请输入事务内容"),
+  eventName: yup.string().required("请输入计划名称"),
+  eventContent: yup.string().required("请输入计划内容"),
   createTime: yup
     .array()
     .typeError("请选择任务时间")
@@ -60,7 +60,7 @@ export default function TopSection({ eventState, setEventState }: Props) {
   };
 
   return (
-    <Card css={{ padding: 20 }} title="创建事务">
+    <Card css={{ padding: 20 }} title="计划创建处">
       <Row gutter={8}>
         <Col span={12}>
           <Row gutter={8}>
@@ -73,7 +73,7 @@ export default function TopSection({ eventState, setEventState }: Props) {
                   fieldState,
                 }) => (
                   <Form.Item
-                    label="事务名称"
+                    label="计划名称"
                     required
                     validateStatus={fieldState.error ? "error" : "success"}
                     help={fieldState.error?.message}
@@ -147,7 +147,7 @@ export default function TopSection({ eventState, setEventState }: Props) {
                   fieldState,
                 }) => (
                   <Form.Item
-                    label="事务内容"
+                    label="计划内容"
                     required
                     validateStatus={fieldState.error ? "error" : "success"}
                     help={fieldState.error?.message}
@@ -214,10 +214,10 @@ export default function TopSection({ eventState, setEventState }: Props) {
           >
             <Row gutter={8}>
               <Col span={24}>
-                <InfoItem title="事务名称" value={state.draftEventName} />
+                <InfoItem title="计划名称" value={state.draftEventName} />
               </Col>
               <Col span={24}>
-                <InfoItem title="事务内容" value={state.draftEventContent} />
+                <InfoItem title="计划内容" value={state.draftEventContent} />
               </Col>
               <Col span={24}>
                 <InfoItem

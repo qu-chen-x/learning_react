@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { prepare } from "./mocks";
-import { BrowserRouter } from "react-router-dom";
+import AppProvider from "./provider/index";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -12,9 +12,9 @@ const root = ReactDOM.createRoot(
 prepare().then(() => {
   root.render(
     <React.StrictMode>
-      <BrowserRouter>
+      <AppProvider>
         <App />
-      </BrowserRouter>
+      </AppProvider>
     </React.StrictMode>
   );
 });
