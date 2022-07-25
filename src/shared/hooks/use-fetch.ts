@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useLogout } from "hooks";
+import { useLogout } from "shared/hooks";
 import useToken from "./use-token";
 import fetchWrapper, { FetchWrapper } from "fetch";
 import {

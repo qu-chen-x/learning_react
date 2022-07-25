@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FormItemLabelProps } from "antd/lib/form/FormItemLabel";
 
-import { DatePicker, InfoItem } from "components";
+import { DatePicker, InfoItem } from "shared/components";
 import { FormValues } from "./types";
 import useEventParams, { initialSate } from "./top-section/use-event-params";
 

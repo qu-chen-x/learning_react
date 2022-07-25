@@ -2,23 +2,19 @@ import * as React from "react";
 import useInterval from "use-interval";
 import * as authProvider from "auth-provider";
 import { useAuth } from "query";
-import { refreshToken } from "hooks/use-fetch";
-
+import { refreshToken } from "shared/hooks/use-fetch";
 interface Props {
   children: React.ReactNode;
 }
-
 const UserContext =
   React.createContext<authProvider.PersistentAuthInformation | null>(
     undefined!
   );
 UserContext.displayName = "UserContext";
-
 //从页面发起的请求到达服务器的估计时间   time unit:millisecond
 const UNSAFE_REQUEST_TIME = 1000;
 //在token过期前多久去刷新token       time unit:minutes
 const REFRESH_TOKEN_HOLD = 4;
-
 function UserProvider({ children }: Props) {
   const userQueryReturn = useAuth();
   /**
@@ -48,7 +44,6 @@ function UserProvider({ children }: Props) {
       ];
     }
   })();
-
   useInterval(
     async () => {
       await refreshToken();
@@ -57,7 +52,6 @@ function UserProvider({ children }: Props) {
     refreshTokenInterval,
     immediate
   );
-
   if (userQueryReturn.isLoading || userQueryReturn.isIdle) {
     return <div>加载中</div>;
   }
@@ -73,6 +67,5 @@ function UserProvider({ children }: Props) {
   }
   return null;
 }
-
 export default UserProvider;
 export { UserContext };

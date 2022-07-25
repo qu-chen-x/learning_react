@@ -1,10 +1,10 @@
 /** @jsxImportSource @emotion/react */
 import { useState, useMemo, useCallback, useEffect } from "react";
-import { EventModule, EventPiece } from "components";
+import { EventModule, EventPiece } from "shared/components";
 import { Col, Row, message, Card } from "antd";
 import { FormValues, ModeType } from "./types";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
-import { useEvent } from "hooks";
+import { useEvent } from "shared/hooks";
 
 interface Props {
   eventState: FormValues[];

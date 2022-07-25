@@ -54,7 +54,7 @@ export interface CheckNeedBindMobileResponse {
 
 const urlSchema = yup.string().required().url();
 const removeAnyLeadingSlash = (partialUrl: string) =>
-  partialUrl.replace(/^\/*/, "");
+  partialUrl.replace(/^\/*/, ""); //去除url里多余的斜杠
 
 const authUrl = process.env.REACT_APP_AUTH_URL;
 const persistentKey = process.env.REACT_APP_LOGIN_PERSISTENT_TOKEN as string;
@@ -115,7 +115,7 @@ function formatAuthResponse(data: AuthInformation): PersistentAuthInformation {
   };
 }
 
-//将用户信息与特定标识登录的字段绑定并存储在本地
+//将用户信息转成JSON数据与特定标识字段绑定并存储在本地
 async function handleAuthResponse(response: JSONResponse<AuthInformation>) {
   if (response.code === 0) {
     const formattedAuth = formatAuthResponse(response.data);

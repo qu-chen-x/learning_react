@@ -1,8 +1,6 @@
 import * as React from "react";
 import { ThemeProvider } from "@emotion/react";
-
 import modifiedThemeVariables from "../styles/theme.json";
-
 const aggregatedThemeVariables = {
   ...modifiedThemeVariables,
   headerHight: 56,
@@ -15,13 +13,10 @@ const aggregatedThemeVariables = {
     right: 14,
   },
 };
-
 type AugmentedTheme = typeof aggregatedThemeVariables;
-
 declare module "@emotion/react" {
   export interface Theme extends AugmentedTheme {}
 }
-
 interface Props {
   children: React.ReactNode;
 }
