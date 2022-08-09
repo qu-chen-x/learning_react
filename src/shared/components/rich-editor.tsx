@@ -137,4 +137,5 @@ RichEditor.initialValue = editorInitialValue;
 RichEditor.serialize = serialize;
 
 export default RichEditor;
+
 export * from "./rich-editor/types";

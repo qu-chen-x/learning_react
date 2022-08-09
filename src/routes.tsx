@@ -20,6 +20,10 @@ const AdventureMap = React.lazy(
   () => import(/*webpackPrefetch:true */ "pages/adventure-map")
 );
 
+const AreaCensus = React.lazy(
+  () => import(/*webpackPrefetch:true */ "pages/area-census")
+);
+
 interface CustomRouteObject extends RouteObject {
   navName: string;
   authCode?: string;
@@ -55,6 +59,11 @@ const myRoutes: CustomRouteObject[] = [
             path: "adventure-map",
             navName: "探险地图",
             element: <AdventureMap />,
+          },
+          {
+            path: "area-census",
+            navName: "区域统计",
+            element: <AreaCensus />,
           },
         ],
       },

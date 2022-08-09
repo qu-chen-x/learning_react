@@ -9,6 +9,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   GlobalOutlined,
+  PieChartOutlined,
 } from "@ant-design/icons";
 import { Button, Menu } from "antd";
 
@@ -47,6 +48,12 @@ export default function NavigatorSection() {
           label: <NavLink to="/service-hall/adventure-map">探险地图</NavLink>,
           key: "4",
           icon: <GlobalOutlined />,
+        },
+        {
+          title: "区域统计",
+          label: <NavLink to="/service-hall/area-census">区域统计</NavLink>,
+          key: "5",
+          icon: <PieChartOutlined />,
         },
       ],
     },
