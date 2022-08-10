@@ -1,10 +1,6 @@
-import { rest } from "msw";
+import areaCensusMock from "./features/areaCensus-mock";
+import authenticationMock from "./features/authentication-mock";
 
-export const handlers = [
-  rest.post("/login", (req, res, ctx) => {
-    return res(ctx.status(200));
-  }),
-  rest.get("/loginOut", (req, res, ctx) => {
-    return res(ctx.status(403));
-  }),
-];
+const handlers = [...areaCensusMock, ...authenticationMock];
+
+export default handlers;
