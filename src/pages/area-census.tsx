@@ -3,7 +3,9 @@ import { useState } from "react";
 import { EChartsOption } from "echarts";
 import AreaCharts from "./area-census/area-charts";
 import { TreeSelect } from "antd";
-import useTreeDataQuery from "./area-census/hooks/use-tree-data-query";
+import useTreeDataQuery, {
+  TreeNode,
+} from "./area-census/hooks/use-tree-data-query";
 
 export default function AreaCensus() {
   const [chartState, setChartState] = useState<EChartsOption>({
@@ -31,14 +33,57 @@ export default function AreaCensus() {
     ],
   });
 
-  const [nodeValue, setNodeValue] = useState<string>();
+  const [nodeValue, setNodeValue] = useState<{
+    value: string;
+    title: string;
+  }>();
 
-  const handleNodeValue = (newValue: string) => {
-    setNodeValue(newValue);
+  const handleNodeValue = (
+    newNode: { value: string; title: string } | undefined
+  ) => {
+    if (typeof newNode === "undefined") {
+      setNodeValue(undefined);
+    } else {
+      setNodeValue({
+        value: newNode.value,
+        title: newNode.title,
+      });
+    }
   };
-  const queryReturned = useTreeDataQuery({
-    id: nodeValue,
-  });
+  const queryReturned = useTreeDataQuery();
+
+  //树形结构转化成普通的对象数组：递归深度优先搜索
+  const handleFlatten = (
+    list: TreeNode[]
+  ): { title: string; value: string }[] => {
+    return list?.reduce(
+      (arr: TreeNode[], { title, value, children = [] }: TreeNode) =>
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        arr.concat([{ title, value }], handleFlatten(children)),
+      []
+    );
+  };
+
+  //遍历树形结构
+  const handleTreeFilter = (treeList: TreeNode[], val: string) => {
+    let newList = handleFlatten(treeList);
+    let treeVal: string | undefined;
+    //使用try...catch...throw Error()方法跳出forEach循环
+    try {
+      newList?.forEach((item) => {
+        if (item.title === val) {
+          treeVal = item.value;
+          throw new Error("退出循环");
+        } else {
+          return;
+        }
+      });
+    } catch (error: any) {
+      console.log(error);
+    }
+
+    return treeVal;
+  };
 
   return (
     <div
@@ -55,7 +100,20 @@ export default function AreaCensus() {
           placeholder="Please select"
           treeDefaultExpandAll
           allowClear
-          value={nodeValue}
+          showSearch
+          labelInValue
+          onSearch={(inputVal) => {
+            let newVal = handleTreeFilter(
+              queryReturned.data?.treeNodeList as [],
+              inputVal
+            );
+            if (typeof newVal === "undefined") {
+              return;
+            } else {
+              handleNodeValue({ title: inputVal, value: newVal });
+            }
+          }}
+          value={nodeValue || undefined}
           onChange={handleNodeValue}
           treeData={queryReturned.data?.treeNodeList}
           disabled={queryReturned.isLoading}

@@ -2,38 +2,29 @@ import { useQuery, QueryFunction } from "react-query";
 import { Fetch, useFetch } from "shared/hooks";
 import { JSONResponse } from "types";
 
-interface SearchParams {
-  id: string | undefined;
-}
-
 interface TreeNode {
   title: string;
   value: string;
-  children: TreeNode[];
+  children?: TreeNode[];
 }
 interface ApiReturn {
   treeNodeList: TreeNode[];
 }
 
-type GetQueryKey = ["area-census", SearchParams];
+type GetQueryKey = ["area-census"];
 
-const getQueryKey = (params: SearchParams): GetQueryKey => [
-  "area-census",
-  params,
-];
+const getQueryKey = (): GetQueryKey => ["area-census"];
 
 type GetQueryFn = (fetch: Fetch) => QueryFunction<ApiReturn, GetQueryKey>;
 
 const getQueryFn: GetQueryFn =
   (fetch: Fetch) =>
   async ({ queryKey }) => {
-    const [, { id }] = queryKey;
     const response = await fetch("/getTreeData", {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-type": "application/json",
       },
-      body: JSON.stringify(id),
     });
     const parsed: JSONResponse<ApiReturn> = await response.json();
     if (parsed.code === 0) {
@@ -43,11 +34,12 @@ const getQueryFn: GetQueryFn =
     }
   };
 
-export default function useTreeDataQuery(params: SearchParams) {
+export default function useTreeDataQuery() {
   const fetch = useFetch();
 
   return useQuery({
-    queryKey: getQueryKey(params),
+    queryKey: getQueryKey(),
     queryFn: getQueryFn(fetch),
   });
 }
+export type { TreeNode };

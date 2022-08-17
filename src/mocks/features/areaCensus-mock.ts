@@ -3,7 +3,7 @@ import { rest } from "msw";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const areaCensusMock = [
-  rest.post(`${apiUrl}/getTreeData`, (req, res, ctx) => {
+  rest.get(`${apiUrl}/getTreeData`, (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
@@ -16,11 +16,11 @@ const areaCensusMock = [
               value: "0-0",
               children: [
                 {
-                  title: "Child Node1",
+                  title: "ChildNode1",
                   value: "0-0-1",
                 },
                 {
-                  title: "Child Node2",
+                  title: "ChildNode2",
                   value: "0-0-2",
                 },
               ],
@@ -30,11 +30,11 @@ const areaCensusMock = [
               value: "0-1",
               children: [
                 {
-                  title: "Child Node1",
+                  title: "ChildNode3",
                   value: "0-1-1",
                 },
                 {
-                  title: "Child Node2",
+                  title: "ChildNode4",
                   value: "0-1-2",
                 },
               ],
