@@ -3,7 +3,7 @@ import { ThemeProvider } from "@emotion/react";
 import modifiedThemeVariables from "../styles/theme.json";
 const aggregatedThemeVariables = {
   ...modifiedThemeVariables,
-  headerHight: 56,
+  headerHeight: 56,
   navWidth: 260,
   contentBackgroundColor: "#f5f6f7",
   pagePadding: {

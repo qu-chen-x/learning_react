@@ -6,8 +6,10 @@ import { TreeSelect } from "antd";
 import useTreeDataQuery, {
   TreeNode,
 } from "./area-census/hooks/use-tree-data-query";
+import { useRegisterTabPage } from "shared/hooks";
 
 export default function AreaCensus() {
+  useRegisterTabPage("区域统计", "/service-hall/area-census", () => {});
   const [chartState, setChartState] = useState<EChartsOption>({
     tooltip: {},
     xAxis: {},
@@ -52,7 +54,26 @@ export default function AreaCensus() {
   };
   const queryReturned = useTreeDataQuery();
 
-  //树形结构转化成普通的对象数组：递归深度优先搜索
+  //遍历树形结构（循环写法）：非递归深度优先搜索
+  const handleLoop = (obj: any, val: string) => {
+    const stack = [];
+    stack.push(obj);
+    while (stack.length > 0) {
+      const currentObj: any = stack.shift();
+      if (currentObj === val) {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
+        return objVal;
+      }
+      const keys = currentObj instanceof Object ? Object.keys(currentObj) : [];
+      for (const key of keys) {
+        var objVal: any = currentObj[key];
+        stack.unshift(objVal);
+      }
+    }
+    return undefined;
+  };
+
+  //树形结构转化成普通的对象数组
   const handleFlatten = (
     list: TreeNode[]
   ): { title: string; value: string }[] => {
@@ -64,7 +85,7 @@ export default function AreaCensus() {
     );
   };
 
-  //遍历树形结构
+  //遍历树形结构（递归写法）：递归深度优先搜索
   const handleTreeFilter = (treeList: TreeNode[], val: string) => {
     let newList = handleFlatten(treeList);
     let treeVal: string | undefined;
@@ -91,11 +112,12 @@ export default function AreaCensus() {
         padding: "150px 0px",
         display: "flex",
         justifyContent: "space-between",
+        background: "#fff",
       }}
     >
       <div className="search-section" css={{ paddingTop: 20 }}>
         <TreeSelect
-          style={{ width: 500 }}
+          style={{ width: 500, marginLeft: 20 }}
           dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
           placeholder="Please select"
           treeDefaultExpandAll
@@ -103,10 +125,16 @@ export default function AreaCensus() {
           showSearch
           labelInValue
           onSearch={(inputVal) => {
+            // let newVal = handleLoop(
+            //   queryReturned.data?.treeNodeList as [],
+            //   inputVal
+            // );
             let newVal = handleTreeFilter(
               queryReturned.data?.treeNodeList as [],
               inputVal
             );
+
+            console.log({ newVal });
             if (typeof newVal === "undefined") {
               return;
             } else {

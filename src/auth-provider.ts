@@ -16,7 +16,7 @@ export interface User {
 
 interface Resource {
   resourceCode?: string;
-  childrenResource: Resource[] | null;
+  childResources: Resource[] | null;
 }
 
 interface AuthInformation {
