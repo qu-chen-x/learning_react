@@ -7,9 +7,11 @@ import useTreeDataQuery, {
   TreeNode,
 } from "./area-census/hooks/use-tree-data-query";
 import { useRegisterTabPage } from "shared/hooks";
-
-export default function AreaCensus() {
-  useRegisterTabPage("区域统计", "/service-hall/area-census", () => {});
+interface Props {
+  type?: string;
+}
+export default function AreaCensus({ type }: Props) {
+  useRegisterTabPage("区域统计", "/service-hall/area-census", type, () => {});
   const [chartState, setChartState] = useState<EChartsOption>({
     tooltip: {},
     xAxis: {},
@@ -113,6 +115,8 @@ export default function AreaCensus() {
         display: "flex",
         justifyContent: "space-between",
         background: "#fff",
+        height: "100%",
+        overflow: "hidden",
       }}
     >
       <div className="search-section" css={{ paddingTop: 20 }}>

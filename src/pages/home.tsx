@@ -1,23 +1,22 @@
 /** @jsxImportSource @emotion/react */
-import { Button, Col, Row, Typography } from "antd";
 import * as React from "react";
+import { Button, Col, Row, Space, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
-  let navigate = useNavigate();
-  const handleOut = () => {
-    navigate("../login", { replace: true });
-  };
+  const navigate = useNavigate();
+
   return (
     <div
       css={{
         width: "100%",
         height: "100vh",
-        padding: 20,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        padding: 20,
+        background: "#fff",
       }}
     >
       <Row gutter={[16, 64]}>
@@ -29,20 +28,41 @@ export default function Home() {
           </Typography>
         </Col>
         <Col span={24} css={{ textAlign: "center" }}>
-          <Button
-            type="primary"
-            htmlType="submit"
-            onClick={() => {
-              handleOut();
-            }}
-            css={{
-              width: 300,
-              background: "#4080FF",
-              borderRadius: "22px",
-            }}
-          >
-            退出
-          </Button>
+          <Space>
+            <Button
+              type="primary"
+              htmlType="submit"
+              onClick={() => {
+                navigate("../setting", { replace: true });
+                // window.open(
+                //   `http://localhost:3000/setting`,
+                //   "_blank",
+                //   "noreferrer"
+                // );
+              }}
+              css={{
+                width: 100,
+                background: "#4080FF",
+                borderRadius: "22px",
+              }}
+            >
+              设置
+            </Button>
+            <Button
+              type="primary"
+              htmlType="submit"
+              onClick={() => {
+                navigate("../login", { replace: true });
+              }}
+              css={{
+                width: 100,
+                background: "#4080FF",
+                borderRadius: "22px",
+              }}
+            >
+              退出
+            </Button>
+          </Space>
         </Col>
       </Row>
     </div>

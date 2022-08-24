@@ -4,6 +4,7 @@ import PageTabsDispatchContext from "pages/dashboard/page-tabs-dispatch-context"
 export default function useRegisterTabPage(
   name: string,
   path: string,
+  type?: string,
   onRemove?: () => void
 ) {
   const dispatch = React.useContext(PageTabsDispatchContext);
@@ -18,6 +19,7 @@ export default function useRegisterTabPage(
     );
   }
   React.useEffect(() => {
+    if (typeof type !== "undefined") return;
     dispatch(
       {
         type: "addTab",
@@ -31,5 +33,5 @@ export default function useRegisterTabPage(
         onRemove: onRemoveRef.current,
       }
     );
-  }, [dispatch, name, path]);
+  }, [dispatch, name, path, type]);
 }

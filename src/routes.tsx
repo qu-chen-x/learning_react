@@ -2,7 +2,12 @@ import * as React from "react";
 import type { RouteObject } from "react-router-dom";
 
 import NoMatch from "pages/no-match";
-import { AppstoreOutlined, HomeOutlined } from "@ant-design/icons";
+import {
+  AppstoreOutlined,
+  CodepenCircleOutlined,
+  CodepenOutlined,
+  HomeOutlined,
+} from "@ant-design/icons";
 import { RequireLogin } from "shared/components";
 import Dashboard from "pages/dashboard";
 
@@ -19,6 +24,10 @@ const AdventureMap = React.lazy(
 
 const AreaCensus = React.lazy(
   () => import(/*webpackPrefetch:true */ "pages/area-census")
+);
+
+const Setting = React.lazy(
+  () => import(/*webpackPrefetch:true */ "pages/setting")
 );
 
 const bypassCode = process.env.REACT_APP_BYPASS_AUTH_CODE as string;
@@ -50,7 +59,7 @@ const myRoutes: CustomRouteObject[] = [
       {
         path: "service-hall",
         navName: "服务大厅",
-        Icon: <AppstoreOutlined />,
+        Icon: <CodepenOutlined />,
         authCode: bypassCode,
         children: [
           {
@@ -73,8 +82,17 @@ const myRoutes: CustomRouteObject[] = [
           },
         ],
       },
+      {
+        path: "setting",
+        navName: "设置",
+        authCode: bypassCode,
+        isHide: true,
+        Icon: <AppstoreOutlined />,
+        element: <Setting />,
+      },
     ],
   },
+
   {
     path: "login",
     navName: "登录",

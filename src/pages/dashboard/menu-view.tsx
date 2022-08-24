@@ -37,6 +37,7 @@ export default function MenuView({ routes, collapsed }: Props) {
   };
 
   const renderMenu = (routes: CustomRouteObject[], parentPath: string[]) => {
+    // console.log({ routes });
     return (
       <>
         {routes.map((dashboardRoute) => {
