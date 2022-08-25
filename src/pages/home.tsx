@@ -3,6 +3,8 @@ import * as React from "react";
 import { Button, Col, Row, Space, Typography } from "antd";
 import { useNavigate } from "react-router-dom";
 
+import bgImg from "./home/images/bg.jpg";
+
 export default function Home() {
   const navigate = useNavigate();
 
@@ -16,7 +18,12 @@ export default function Home() {
         justifyContent: "center",
         alignItems: "center",
         padding: 20,
-        background: "#fff",
+        // background: "#fff",
+        backgroundImage: `url(${bgImg})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+
+        opacity: 0.9,
       }}
     >
       <Row gutter={[16, 64]}>

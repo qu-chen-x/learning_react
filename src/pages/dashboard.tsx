@@ -4,7 +4,6 @@ import SiderSection from "./dashboard/sider-section";
 import ContentSection from "./dashboard/content-section";
 import { Layout } from "antd";
 import { useTheme } from "@emotion/react";
-import { useLocation } from "react-router-dom";
 
 export default function DashBoard() {
   const theme = useTheme();

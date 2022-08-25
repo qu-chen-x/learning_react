@@ -5,7 +5,6 @@ import { css } from "@emotion/react";
 import { Menu } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import { CustomRouteObject } from "routes";
-import { string } from "yup";
 
 const navItemStyle = css({
   //在给元素加样式，请注意伪类的顺序https://developer.mozilla.org/en-US/docs/Web/CSS/:active
@@ -37,7 +36,6 @@ export default function MenuView({ routes, collapsed }: Props) {
   };
 
   const renderMenu = (routes: CustomRouteObject[], parentPath: string[]) => {
-    // console.log({ routes });
     return (
       <>
         {routes.map((dashboardRoute) => {
@@ -82,9 +80,11 @@ export default function MenuView({ routes, collapsed }: Props) {
       mode="inline"
       selectedKeys={[location.pathname]}
       css={{
+        overflowX: "hidden",
+        overflowY: "hidden",
         flex: 1,
-        overflowX: "auto",
-        overflowY: "auto",
+        // overflowX: "auto",
+        // overflowY: "auto",
         "&& .ant-menu-inline": {
           background: "#fff",
         },

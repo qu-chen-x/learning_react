@@ -1,12 +1,17 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { EChartsOption } from "echarts";
-import AreaCharts from "./area-census/area-charts";
 import { TreeSelect } from "antd";
+import { useDrag, useDrop } from "react-dnd";
+
 import useTreeDataQuery, {
   TreeNode,
 } from "./area-census/hooks/use-tree-data-query";
 import { useRegisterTabPage } from "shared/hooks";
+import AreaCharts from "./area-census/area-charts";
+import Dustbin from "./area-census/dustbin";
+import Litter from "./area-census/litter";
+
 interface Props {
   type?: string;
 }
@@ -111,7 +116,7 @@ export default function AreaCensus({ type }: Props) {
   return (
     <div
       css={{
-        padding: "150px 0px",
+        padding: "50px 0px",
         display: "flex",
         justifyContent: "space-between",
         background: "#fff",
@@ -119,39 +124,61 @@ export default function AreaCensus({ type }: Props) {
         overflow: "hidden",
       }}
     >
-      <div className="search-section" css={{ paddingTop: 20 }}>
-        <TreeSelect
-          style={{ width: 500, marginLeft: 20 }}
-          dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-          placeholder="Please select"
-          treeDefaultExpandAll
-          allowClear
-          showSearch
-          labelInValue
-          onSearch={(inputVal) => {
-            // let newVal = handleLoop(
-            //   queryReturned.data?.treeNodeList as [],
-            //   inputVal
-            // );
-            let newVal = handleTreeFilter(
-              queryReturned.data?.treeNodeList as [],
-              inputVal
-            );
+      <div
+        className="left-section"
+        css={{
+          paddingTop: 20,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "flex-start",
+        }}
+      >
+        <div className="tree-section" css={{ height: "30%" }}>
+          <TreeSelect
+            style={{ width: 500, marginLeft: 20 }}
+            dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
+            placeholder="Please select"
+            treeDefaultExpandAll
+            allowClear
+            showSearch
+            labelInValue
+            onSearch={(inputVal) => {
+              // let newVal = handleLoop(
+              //   queryReturned.data?.treeNodeList as [],
+              //   inputVal
+              // );
+              let newVal = handleTreeFilter(
+                queryReturned.data?.treeNodeList as [],
+                inputVal
+              );
 
-            console.log({ newVal });
-            if (typeof newVal === "undefined") {
-              return;
-            } else {
-              handleNodeValue({ title: inputVal, value: newVal });
-            }
+              if (typeof newVal === "undefined") {
+                return;
+              } else {
+                handleNodeValue({ title: inputVal, value: newVal });
+              }
+            }}
+            value={nodeValue || undefined}
+            onChange={handleNodeValue}
+            treeData={queryReturned.data?.treeNodeList}
+            disabled={queryReturned.isLoading}
+          />
+        </div>
+        <div
+          className="dnd-section"
+          css={{
+            padding: 20,
+            display: "flex",
+            justifyContent: "space-around",
+            alignItems: "flex-end",
           }}
-          value={nodeValue || undefined}
-          onChange={handleNodeValue}
-          treeData={queryReturned.data?.treeNodeList}
-          disabled={queryReturned.isLoading}
-        />
+        >
+          <Dustbin />
+          <Litter name={"litters"} flag={false} />
+        </div>
       </div>
-      <div className="chart-section">
+
+      <div className="right-section">
         <AreaCharts title={{ text: "区域统计图" }} {...chartState} />
       </div>
     </div>
